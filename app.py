@@ -2,9 +2,8 @@ from flask import Flask, render_template
 from extensions import db, login_manager
 from models.user import User
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secretkey'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookstore.db'
+app = Flask(_name_)
+app.config.from_pyfile('config.py')
 
 db.init_app(app)
 login_manager.init_app(app)
@@ -48,10 +47,36 @@ def initialize_delivery_providers():
 def home():
     return render_template('home.html')
 
-if __name__ == '__main__':
-# OJO este conexto crea las tablas e inicia los proveedores de entrega, 
-# se debe ejecutar cada que se reinstala y ejecuta la aplicación Bookstore
+if _name_ == '_main_':
+    # Esperar a que la base de datos esté lista
+    import time
+    import pymysql
+    
+    print("Esperando a que la base de datos MySQL esté disponible...")
+    max_attempts = 30
+    for attempt in range(max_attempts):
+        try:
+            conn = pymysql.connect(
+                host='db',
+                user='bookstore_user',
+                password='bookstore_pass',
+                database='bookstore',
+                connect_timeout=5
+            )
+            conn.close()
+            print("Base de datos conectada exitosamente!")
+            break
+        except pymysql.err.OperationalError as e:
+            print(f"Intento {attempt+1}/{max_attempts}: Base de datos no disponible, esperando 2 segundos...")
+            time.sleep(2)
+    else:
+        print("No se pudo conectar a la base de datos después de varios intentos.")
+        print("Intentando crear tablas de todos modos...")
+    
+    # Crear tablas e inicializar datos
     with app.app_context():
         db.create_all()
         initialize_delivery_providers()
+    
+    # Iniciar la aplicación Flask
     app.run(host="0.0.0.0", debug=True)
