@@ -16,6 +16,25 @@
 | Edwin Nelson Montoya Múnera | emontoya@eafit.edu.co |
 
 ## Vídeo de la Sustentación
+Por el inconveniente que tuvimos con la aplicación, no pudimos grabar el vídeo con los objetivos 1 y 2, sin embargo, tomamos capturas del progreso de ambos objetivos. Cuando solucionemos y terminemos lo que tenemos pendiente, montaremos el vídeo a la entrega.
+
+![Image](https://github.com/user-attachments/assets/9428b92f-96de-49cc-b5c0-9aae2f642e9d)
+
+![Image](https://github.com/user-attachments/assets/392d10ad-88fc-4c6d-bc15-6c1ddab2cff8)
+
+![Image](https://github.com/user-attachments/assets/5648b339-2619-4195-a0c4-b1f1c9a01205)
+
+![Image](https://github.com/user-attachments/assets/b7d323ad-bf28-45b2-8e99-4febb31ce679)
+
+![Image](https://github.com/user-attachments/assets/a08af28e-d7eb-4be1-8971-1dbe5595e449)
+
+![Image](https://github.com/user-attachments/assets/dbcdc3ae-a81c-4b19-b4a9-e11a61d6692b)
+
+![Image](https://github.com/user-attachments/assets/ffe9aa46-d242-4c1b-9113-72f0563c9400)
+
+![Image](https://github.com/user-attachments/assets/a9ed2280-bfd8-4b75-988e-0176ddf7106c)
+
+![Image](https://github.com/user-attachments/assets/0c2f9b7a-23b7-452a-b62e-ac28e08564b8)
 
 ## 1. Descripción de la actividad
 A partir de una aplicación monolítica "BookStore" la cual corre en una sola máquina, con docker, un docker para la base de datos y otro docker para la aplicación; implementar lo siguiente:
