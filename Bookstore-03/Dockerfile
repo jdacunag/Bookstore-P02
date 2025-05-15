@@ -1,17 +1,20 @@
-# Usa una imagen oficial de Python
+# Dockerfile
 FROM python:3.10-slim
 
-# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia los archivos al contenedor
 COPY . .
 
-# Instala las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expone el puerto 5000 para Flask
 EXPOSE 5000
+
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=production
+
+# Ensure application health checks are available
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost:5000/ || exit 1
 
 # Comando para correr la app
 CMD ["python", "app.py"]
