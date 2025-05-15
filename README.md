@@ -28,7 +28,7 @@ A partir de una aplicación monolítica "BookStore" la cual corre en una sola m�
 Escalar la app monolitica en Kubernetes con Docker Swarm, en vez de contenedores son pods en un cluster y que se conecten externamente a la base de datos.
 
 ## 1.2 Aspectos NO cumplidos o desarrollados
-
+Hasta el momento de la entrega, habíamos realizado los objetivos 1 y 2 de esta, sin embargo, al realizar un cambio en el código de los instance-templates lo cual daño todo nuestro progreso y que no permitio progesar al objetivo 3. Quedamos con el profesor que terminariamos todo lo que nos falta y que nos comunicaremos con él mediante el correo de interactiva para que pueda volver a revisar el proyecto completo y revalorar nuestra calificación.
 
 ## 2. Información general del proyecto
 
@@ -39,6 +39,35 @@ Escalar la app monolitica en Kubernetes con Docker Swarm, en vez de contenedores
 ### Objetivo 3
 
 ### Arquitectura del Sistema
+
+```
+Bookstore-P02/
+├── Bookstore-01/ # Carpeta con el objetivo 1 del proyecto
+│   ├── controllers                   
+│   ├── instance    
+│   ├── models
+│   ├── static
+│   ├── templates
+│   ├── app.py
+│   ├── config.py
+│   ├── docker-compose.yml
+│   ├── Dockerfile
+│   ├── extensions.py
+│   └── requirements.txt
+├── Bookstore-02/ # Carpeta con el objetivo 2 del proyecto
+│   ├── controllers                   
+│   ├── instance    
+│   ├── models
+│   ├── static
+│   ├── templates
+│   ├── app.py
+│   ├── config.py
+│   ├── docker-compose.yml
+│   ├── Dockerfile
+│   ├── extensions.py
+│   └── requirements.txt
+├── Bookstore-03/ # Carpeta con el objetivo 3 del proyecto
+```
 
 ### Patrones implementados
 
@@ -92,3 +121,9 @@ Y luego encender el entorno virtual
 
 
 ## 4. Descripción del ambiente de EJECUCIÓN (en producción)
+
+### Ambiente de ejecución
+
+### Configuración en AWS
+
+## Referencias
