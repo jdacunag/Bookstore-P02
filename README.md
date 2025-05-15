@@ -32,6 +32,12 @@ Escalar la app monolitica en Kubernetes con Docker Swarm, en vez de contenedores
 
 ## 2. Información general del proyecto
 
+### Objetivo 1
+
+### Objetivo 2
+
+### Objetivo 3
+
 ### Arquitectura del Sistema
 
 ### Patrones implementados
@@ -41,9 +47,12 @@ Escalar la app monolitica en Kubernetes con Docker Swarm, en vez de contenedores
 ### Lenguajes, librerías y tecnologías usadas
 
 Frontend ->	Flask (Python)	
+
 Bases de datos	(MySQL)	
-Orquestación	Docker Swarm	Docker 
-Contenedores	Docker Engine	
+
+Orquestación (Docker Swarm, Docker)
+
+Contenedores (Docker Engine)
 
 ### Compilación y ejecución
 
