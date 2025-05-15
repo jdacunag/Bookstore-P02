@@ -67,6 +67,7 @@ Bookstore-P02/
 │   ├── extensions.py
 │   └── requirements.txt
 ├── Bookstore-03/ # Carpeta con el objetivo 3 del proyecto
+└── README.md
 ```
 
 ### Patrones implementados
