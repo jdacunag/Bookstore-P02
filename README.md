@@ -32,13 +32,100 @@ Hasta el momento de la entrega, habíamos realizado los objetivos 1 y 2 de esta,
 
 ## 2. Información general del proyecto
 
+### Arquitectura del sistema
+#### 1. Cliente:
+
+* Interfaz web basada en HTML/CSS con Bootstrap 5.3.2
+
+* Interactúa con el servidor a través de formularios y solicitudes HTTP
+
+
+#### 2. Servidor Web:
+
+* Flask (framework web de Python)
+
+* Gestiona las solicitudes HTTP y renderiza las plantillas
+
+*Configurado para ejecutarse en Docker dentro de un contenedor
+
+
+#### 3. Controladores (Blueprints):
+
+* **auth_controller:** Gestión de autenticación (login, registro, logout)
+
+* **book_controller:** Operaciones CRUD para libros
+
+* **purchase_controller:** Gestión de compras de libros
+
+* **payment_controller:** Procesamiento de pagos
+
+* **delivery_controller:** Gestión de envíos
+
+* **admin_controller:** Funciones administrativas
+
+
+#### 4. Modelos de Datos:
+
+* **User:** Gestión de usuarios y autenticación
+
+* **Book:** Información de libros
+
+* **Purchase:** Registros de compras
+
+* **Payment:** Transacciones de pago
+
+* **DeliveryProvider:** Proveedores de entrega
+
+* **DeliveryAssignment:** Asignación de envíos
+
+
+#### 5. Base de Datos:
+
+* MySQL 8.0
+  
+* Almacena todos los datos de la aplicación
+
+* Conectada a través de SQLAlchemy ORM
+
+
+#### 6. Componentes de Soporte:
+
+* **flask_login:** Gestión de sesiones y autenticación
+
+* **werkzeug:** Utilidades HTTP y de seguridad
+
+* **flask_sqlalchemy:** ORM para interactuar con la base de datos
+
+
+#### 7. Contenedorización:
+
+* Docker para encapsular la aplicación y sus dependencias
+
+* Docker Compose para orquestar múltiples contenedores (aplicación y base de datos)
+
+### Flujo de Datos
+
+1. El usuario interactúa con la interfaz web (Vista)
+ 
+2. Las solicitudes son procesadas por los controladores correspondientes (Controlador)
+ 
+3. Los controladores interactúan con los modelos para acceder o modificar datos (Modelo)
+ 
+4. SQLAlchemy traduce las operaciones de modelo a consultas SQL
+    
+5. La base de datos MySQL ejecuta las consultas y devuelve resultados
+ 
+6. El controlador procesa los resultados y los pasa a la vista
+    
+7. La vista renderiza los datos en plantillas HTML que se devuelven al usuario
+
 ### Objetivo 1
 
 ### Objetivo 2
 
 ### Objetivo 3
 
-### Arquitectura del Sistema
+### Estructura del proyecto
 
 ```
 Bookstore-P02/
