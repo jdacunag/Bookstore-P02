@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  flaskapp:
+    image: ami-0cd96f6c6db2f6b65  # Tu AMI específica
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=secretkey
+      # RDS específico
+      - DATABASE_URI=mysql+pymysql://bookstore_user:bookstore_pass@bookstore-db.cv48yui8kfd3.us-east-1.rds.amazonaws.com/bookstore
+    ports:
+      - "5000:5000"
+    networks:
+      - bookstore_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Herramienta de visualización para el swarm
+  visualizer:
+    image: dockersamples/visualizer:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - bookstore_net
+
+networks:
+  bookstore_net:
+    driver: overlay
