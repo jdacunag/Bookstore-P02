@@ -329,6 +329,7 @@ Y luego encender el entorno virtual
 
 ### Ambiente de ejecución (OBJETIVO 2)
 
-### Configuración en AWS
+### Ambiente de ejecución (OBJETIVO 3)
+
 
 ## Referencias
