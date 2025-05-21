@@ -127,6 +127,8 @@ Desplegar la aplicación BookStore Monolítica en una Máquina Virtual en AWS, c
 
 
 ### Objetivo 2
+Realizar el escalamiento en nube de la aplicación monolítica, siguiente algún patrón de arquitectura de escalamiento de apps monolíticas en AWS. La aplicación debe ser escalada utilizando Máquinas Virtuales (VM) con autoescalamiento, base de datos aparte Administrada o si es implementada con VM con Alta Disponibilidad, y Archivos compartidos vía NFS (como un servicio o una VM con NFS con Alta Disponibilidad).
+
 ```
 cat > deploy_bookstore_final.sh << 'EOF'
 #!/bin/bash
@@ -322,7 +324,6 @@ Y luego encender el entorno virtual
 
 **NOTA:** El ambiente de desarrollo a nivel local solamente fue usado para probar la aplicación y poder implementar los objetivos.
 
-### Configuración de parámetros
 
 
 ## 4. Descripción del ambiente de EJECUCIÓN (en producción)
