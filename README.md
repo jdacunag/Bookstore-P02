@@ -123,6 +123,8 @@ Hasta el momento de la entrega, habíamos realizado los objetivos 1 y 2 de esta,
 ### Objetivo 1
 Desplegar la aplicación BookStore Monolítica en una Máquina Virtual en AWS, con un dominio propio, certificado SSL y Proxy inverso en NGINX. 
 
+#### Diagrama de la Arquitectura
+
 
 ### Objetivo 2
 ```
@@ -233,6 +235,7 @@ echo "Para ver los logs en tiempo real: docker-compose logs -f"
 EOF
 
 ```
+#### Diagrama de la Arquitectura
 
 ### Objetivo 3
 En el objetivo 3, se conservará mucho de lo desarrollado en el objetivo 2, pero en vez se utilizar máquinas virtuales en autoescalamiento, se utilizará un clúster.
@@ -269,8 +272,7 @@ Bookstore-P02/
 ├── Bookstore-03/ # Carpeta con el objetivo 3 del proyecto
 └── README.md
 ```
-
-### Patrones implementados
+#### Diagrama de la Arquitectura
 
 ## 3. Descripción del ambiente de desarrollo y técnico
 
@@ -330,6 +332,7 @@ Y luego encender el entorno virtual
 ### Ambiente de ejecución (OBJETIVO 2)
 
 ### Ambiente de ejecución (OBJETIVO 3)
+#### Despliegue en Docker Swarm
 
 
 ## Referencias
