@@ -159,6 +159,7 @@ Hasta el momento de la entrega, habíamos realizado los objetivos 1 y 2 de esta,
 
 #### Diagrama de la Arquitectura
 
+![Captura de pantalla 2025-05-21 221544](https://github.com/user-attachments/assets/880a66a2-13ee-4ffd-ba1e-5682929bd473)
 
 ### Objetivo 2
 Realizar el escalamiento en nube de la aplicación monolítica, siguiente algún patrón de arquitectura de escalamiento de apps monolíticas en AWS. La aplicación debe ser escalada utilizando Máquinas Virtuales (VM) con autoescalamiento, base de datos aparte Administrada o si es implementada con VM con Alta Disponibilidad, y Archivos compartidos vía NFS (como un servicio o una VM con NFS con Alta Disponibilidad).
