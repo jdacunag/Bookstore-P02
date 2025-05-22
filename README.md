@@ -16,7 +16,7 @@
 | Edwin Nelson Montoya Múnera | emontoya@eafit.edu.co |
 
 ## Vídeo de la Sustentación
-
+[Link del Video](https://youtu.be/_TKlc1hrPTs)
 
 ## 1. Descripción de la actividad
 A partir de una aplicación monolítica "BookStore" la cual corre en una sola máquina, con docker, un docker para la base de datos y otro docker para la aplicación; implementar lo siguiente:
