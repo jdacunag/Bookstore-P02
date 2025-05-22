@@ -164,119 +164,14 @@ No implementamos kubernetes para el objetivo 3.
 ### Objetivo 2
 Realizar el escalamiento en nube de la aplicación monolítica, siguiente algún patrón de arquitectura de escalamiento de apps monolíticas en AWS. La aplicación debe ser escalada utilizando Máquinas Virtuales (VM) con autoescalamiento, base de datos aparte Administrada o si es implementada con VM con Alta Disponibilidad, y Archivos compartidos vía NFS (como un servicio o una VM con NFS con Alta Disponibilidad).
 
-```
-cat > deploy_bookstore_final.sh << 'EOF'
-#!/bin/bash
-# Script corregido final para desplegar BookStore completo con RDS
-
-echo "=== Iniciando despliegue final de BookStore con RDS ==="
-
-# 0. Detener todos los contenedores Docker
-echo "=== Deteniendo contenedores existentes ==="
-docker stop $(docker ps -aq) || true
-
-# 1. Crear directorio para la aplicación
-cd ~
-rm -rf bookstore_final  # Eliminar directorio si existe
-mkdir -p bookstore_final
-cd bookstore_final
-
-# 2. Descargar y descomprimir BookStore
-echo "=== Descargando BookStore ==="
-curl -L -o BookStore.zip https://github.com/st0263eafit/st0263-251/raw/main/proyecto2/BookStore.zip
-unzip -o BookStore.zip
-rm BookStore.zip
-
-# 3. Mover los archivos al directorio actual
-echo "=== Reorganizando archivos ==="
-mv BookStore-monolith/* .
-rm -rf BookStore-monolith __MACOSX
-
-# 4. Configurar la aplicación para usar RDS
-echo "=== Configurando conexión a RDS ==="
-cat > config.py << 'EOL'
-import os
-
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://bookstore_user:juandiego123@bookstore-db.cv48yui8kfd3.us-east-1.rds.amazonaws.com/bookstore'
-SECRET_KEY = 'secretkey'
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-EOL
-
-# 5. Modificar docker-compose.yml para usar puerto 5002
-echo "=== Configurando Docker Compose con puerto 5002 ==="
-cat > docker-compose.yml << 'EOL'
-services:
-  flaskapp:
-    build: .
-    restart: always
-    environment:
-      - FLASK_ENV=production
-    ports:
-      - "5002:5000"
-EOL
-
-# 6. Confirmar que Dockerfile existe
-echo "=== Verificando archivos críticos ==="
-if [ ! -f "Dockerfile" ]; then
-  echo "❌ Error: Dockerfile no encontrado"
-  ls -la
-  exit 1
-fi
-
-# 7. Configurar Nginx
-echo "=== Configurando Nginx ==="
-sudo bash -c 'cat > /etc/nginx/conf.d/bookstore.conf << EOL
-server {
-    listen 80;
-    server_name proyecto2.tudominio.tld www.proyecto2.tudominio.tld;
-    
-    location / {
-        proxy_pass http://localhost:5002;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-    }
-    
-    location /.well-known/acme-challenge/ {
-        root /var/www/html;
-        try_files \$uri =404;
-    }
-}
-EOL'
-
-# 8. Reiniciar Nginx
-echo "=== Reiniciando Nginx ==="
-sudo nginx -t && sudo systemctl restart nginx
-
-# 9. Construir e iniciar la aplicación
-echo "=== Construyendo e iniciando la aplicación ==="
-docker-compose down || true
-docker-compose up -d
-
-# 10. Configurar inicio automático en el arranque
-echo "=== Configurando inicio automático ==="
-cat > ~/start-bookstore.sh << 'EOL'
-#!/bin/bash
-cd ~/bookstore_final
-docker-compose up -d
-EOL
-chmod +x ~/start-bookstore.sh
-
-# Añadir al crontab para inicio automático
-(crontab -l 2>/dev/null || echo "") | grep -v "start-bookstore.sh" | echo "@reboot ~/start-bookstore.sh" - | crontab -
-
-echo "=== Despliegue de BookStore completado ==="
-echo "La aplicación ahora está disponible en: http://proyecto2.tudominio.tld"
-echo "Para ver los logs en tiempo real: docker-compose logs -f"
-EOF
-
-```
 #### Diagrama de la Arquitectura
 
 ### Objetivo 3
 En el objetivo 3, se conservará mucho de lo desarrollado en el objetivo 2, pero en vez se utilizar máquinas virtuales en autoescalamiento, se utilizará un clúster.
 Escalar la app monolitica en Kubernetes o Docker Swarm (en este caso usamos Docker Swarm), en vez de contenedores son pods en un cluster y que se conecten externamente a la base de datos.
+
+### Diagrama de la Arquitectura
+
 
 ### Estructura del proyecto
 
@@ -309,7 +204,7 @@ Bookstore-P02/
 ├── Bookstore-03/ # Carpeta con el objetivo 3 del proyecto
 └── README.md
 ```
-#### Diagrama de la Arquitectura
+
 
 ## 3. Descripción del ambiente de desarrollo y técnico
 
