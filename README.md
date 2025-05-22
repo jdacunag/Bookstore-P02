@@ -29,7 +29,7 @@ A partir de una aplicación monolítica "BookStore" la cual corre en una sola m�
 Escalar la app monolitica en Kubernetes con Docker Swarm, en vez de contenedores son pods en un cluster y que se conecten externamente a la base de datos.
 
 ## 1.2 Aspectos NO cumplidos o desarrollados
-Hasta el momento de la entrega, habíamos realizado los objetivos 1 y 2 de esta, sin embargo, al realizar un cambio en el código de los instance-templates lo cual daño todo nuestro progreso y que no permitio progesar al objetivo 3. Quedamos con el profesor que terminariamos todo lo que nos falta y que nos comunicaremos con él mediante el correo de interactiva para que pueda volver a revisar el proyecto completo y revalorar nuestra calificación.
+No implementamos kubernetes para el objetivo 3.
 
 ## 2. Información general del proyecto
 
@@ -886,8 +886,8 @@ Ya has configurado exitosamente una instancia con el script `deploy_bookstore_fi
 ## Ambiente de ejecución (OBJETIVO 3)
 Para el Objetivo 3, implementaremos la aplicación BookStore monolítica en un clúster de Docker Swarm, manteniendo la misma funcionalidad pero aprovechando las capacidades de orquestación de contenedores.
 
-## 1. Configuración de instancias para Docker Swarm  
-### 1.1. Crear tres instancias EC2 (Nodos)
+### 1. Configuración de instancias para Docker Swarm  
+#### 1.1. Crear tres instancias EC2 (Nodos)
 
 Se necesitan 3 instancias EC2: 1 para el nodo manager y 2 para los nodos worker.
 
@@ -908,13 +908,13 @@ Se necesitan 3 instancias EC2: 1 para el nodo manager y 2 para los nodos worker.
 - `bookstore-swarm-worker1`
 - `bookstore-swarm-worker2`
 
-  ### 1.2. Asignar IP elástica al nodo manager
+  #### 1.2. Asignar IP elástica al nodo manager
 
 1. En la consola AWS, ve a EC2 > Elastic IPs > Allocate Elastic IP address
 2. Asocia la IP elástica a la instancia `bookstore-swarm-manager`
 3. Anota la IP elástica: (en este caso nuestra IP Elástica es > 18.210.125.85) 
 
-## 2. Instalación y configuración de Docker en todas las instancias
+### 2. Instalación y configuración de Docker en todas las instancias
 
 Conéctate a cada una de las tres instancias y ejecuta los siguientes comandos (EN CADA UNA DE LAS INSTANCIAS):
 
@@ -938,7 +938,7 @@ exit
 
 Vuelve a conectarte a cada instancia después de salir.
 
-## 3. Inicializar Docker Swarm en el nodo manager (Despliegue en Docker Swarm)
+### 3. Inicializar Docker Swarm en el nodo manager (Despliegue en Docker Swarm)
 
 Conéctate a la instancia `bookstore-swarm-manager` vía SSH:
 
@@ -955,7 +955,7 @@ El comando anterior generará un token de unión para los nodos worker. Copia es
 docker swarm join --token SWMTKN-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx $PRIVATE_IP:2377
 ```
 
-## 4. Unir los nodos worker al Swarm
+### 4. Unir los nodos worker al Swarm
 
 Conéctate a cada una de las instancias worker (`bookstore-swarm-worker1` y `bookstore-swarm-worker2`) y ejecuta (pega) el comando de unión que obtuviste en el paso anterior:
 
@@ -963,7 +963,7 @@ Conéctate a cada una de las instancias worker (`bookstore-swarm-worker1` y `boo
 docker swarm join --token SWMTKN-1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx [IP_PRIVADA_MANAGER]:2377
 ```
 
-## 5. Verificar el Clúster Swarm
+### 5. Verificar el Clúster Swarm
 
 Vuelve a la instancia `bookstore-swarm-manager` y verifica que todos los nodos se hayan unido correctamente:
 
@@ -973,7 +973,7 @@ docker node ls
 
 Deberías ver los tres nodos (1 manager con un asterisco y 2 workers), todos con estado "Ready".
 
-## 6. Configurar Docker Hub
+### 6. Configurar Docker Hub
 
 1. Registra una cuenta en https://hub.docker.com/repositories/jdacunag si no tienes una
 2. En la instancia manager, inicia sesión en Docker Hub:
@@ -986,7 +986,7 @@ docker login
    
 4. Debería aparecer un mensaje de que el inicio de sesión se realizó con éxito.
 
-## 7. Crear y subir la imagen Docker de BookStore
+### 7. Crear y subir la imagen Docker de BookStore
 
 En la instancia `bookstore-swarm-manager`:
 
@@ -1056,7 +1056,7 @@ docker tag bookstore:latest jdacunag/bookstore-03:latest
 # Subir la imagen a Docker Hub
 docker push jdacunag/bookstore-03:latest
 ```
-## 8. Crear y configurar el archivo docker-stack.yml
+### 8. Crear y configurar el archivo docker-stack.yml
 
 En la instancia `bookstore-swarm-manager`:
 
@@ -1137,7 +1137,7 @@ networks:
     driver: overlay
     attachable: true
 ```
-## 9. Configurar Nginx como proxy inverso
+### 9. Configurar Nginx como proxy inverso
 
 Crear la estructura de directorios para nginx:
 
@@ -1200,14 +1200,14 @@ Establecer permisos correctos:
 chmod -R 755 nginx/
 ```
 
-## 10. Desplegar el stack en Docker Swarm
+### 10. Desplegar el stack en Docker Swarm
 
 ```bash
 cd ~/Bookstore-03
 docker stack deploy -c docker-stack.yml bookstore-03
 ```
 
-## 11. Verificar el despliegue del stack
+### 11. Verificar el despliegue del stack
 
 ```bash
 # Ver los servicios desplegados
@@ -1222,9 +1222,9 @@ docker service ls
 
 Todos los servicios deberían mostrar el estado "Running" y el número correcto de réplicas.
 
-## 12. Configurar DNS para apuntar al nodo manager
+### 12. Configurar DNS para apuntar al nodo manager
 
-### Actualizar registro DNS en GoDaddy
+#### Actualizar registro DNS en GoDaddy
 
 1. En GoDaddy o tu proveedor DNS, crea un registro A para "proyecto3" que apunte a la IP elástica del nodo manager:
    - **Tipo**: A
@@ -1234,7 +1234,7 @@ Todos los servicios deberían mostrar el estado "Running" y el número correcto 
 
 2. Espera a que se propague el DNS (puede tomar unos minutos)
 
-### Verificar la propagación DNS
+#### Verificar la propagación DNS
 
 ```bash
 nslookup proyecto3.libritosedwin.site
@@ -1340,7 +1340,7 @@ docker service logs bookstore-03_proxy
 ```
 
 
-## 14. Probar el escalamiento de servicios
+### 14. Probar el escalamiento de servicios
 
 ```bash
 # Escalar el servicio de bookstore a 5 réplicas
@@ -1351,14 +1351,14 @@ docker service ls
 docker stack ps bookstore-03
 ```
 
-## 15. Configurar monitorización básica
+### 15. Configurar monitorización básica
 
 ```bash
 # Verificar el dashboard de visualizer
 echo "Visualizer disponible en: http://$(curl -s ifconfig.me):8080"
 ```
 
-## 16. Verificar el despliegue
+### 16. Verificar el despliegue
 
 1. Abre tu navegador y navega a `https://proyecto3.libritosedwin.site`
 2. Deberías estar la aplicación BookStore funcionando correctamente con HTTPS
