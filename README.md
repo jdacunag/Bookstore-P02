@@ -166,11 +166,82 @@ Realizar el escalamiento en nube de la aplicación monolítica, siguiente algún
 
 #### Diagrama de la Arquitectura
 
-### Objetivo 3
+## Objetivo 3
 En el objetivo 3, se conservará mucho de lo desarrollado en el objetivo 2, pero en vez se utilizar máquinas virtuales en autoescalamiento, se utilizará un clúster.
 Escalar la app monolitica en Kubernetes o Docker Swarm (en este caso usamos Docker Swarm), en vez de contenedores son pods en un cluster y que se conecten externamente a la base de datos.
 
+## ¿Qué implementamos?
+**Aplicación BookStore desplegada en un clúster Docker Swarm con alta disponibilidad:**
+
+### Infraestructura base:
+* 3 instancias EC2 (t2.micro) con Amazon Linux 2023:
+
+  * 1 nodo Manager (con IP elástica para acceso desde Internet
+  
+  * 2 nodos Worker para distribución de cargas
+
+
+* Clúster Docker Swarm configurado para orquestación automática
+  
+* Grupo de seguridad configurado para HTTP (80), HTTPS (443), SSH (22) y comunicación Swarm (2377, 7946, 4789)
+  
+* Base de datos MySQL RDS externa para persistencia centralizada
+  
+### Componentes de software:
+
+* Nginx: Servidor web y proxy inverso desplegado en el nodo Manager, maneja conexiones HTTPS y balancea carga hacia las réplicas de la aplicación
+
+* Docker Swarm: Orquestador nativo de Docker para gestión automática de contenedores, distribución de cargas y alta disponibilidad
+
+* Aplicación Flask: API monolítica desplegada en 3 réplicas distribuidas automáticamente entre los nodos Worker
+
+* MySQL RDS: Base de datos externa gestionada por AWS, accesible desde todas las réplicas de la aplicación
+
+* Docker Visualizer: Herramienta de monitoreo para visualizar el estado del clúster Swarm
+
+### Funcionalidades de la aplicación:
+* Registro y autenticación de usuarios
+
+* Catálogo de libros con visualización
+
+* Sistema de compras con gestión de stock distribuido
+
+* Procesamiento de pagos (simulado)
+
+* Gestión de entregas con múltiples proveedores
+
+* Panel administrativo para gestión de usuarios
+
+* Alta disponibilidad: La aplicación permanece disponible aunque falle uno de los nodos
+
+### Características técnicas:
+* Arquitectura: Monolítica replicada en múltiples contenedores para alta disponibilidad
+
+* Base de datos: MySQL RDS externa, compartida por todas las réplicas
+
+* Load Balancer: Docker Swarm distribuye automáticamente las peticiones entre las 3 réplicas
+
+* Proxy inverso: Nginx redirige de puerto 80/443 hacia el servicio interno del clúster
+
+* Persistencia: Base de datos externa RDS para datos persistentes y consistentes
+
+* Escalabilidad: Horizontal automática (se pueden agregar/quitar réplicas dinámicamente)
+
+* Tolerancia a fallos: Si un nodo falla, Swarm redistribuye automáticamente los contenedores
+
+* Service Discovery: Resolución automática de nombres de servicios dentro del clúster
+
+### Seguridad y dominio:
+* Dominio propio configurado (proyecto3.libritosedwin.site)
+
+* Certificado SSL de Let's Encrypt para conexiones HTTPS seguras
+
+* Renovación automática de certificados programada
+
+* Red overlay segura para comunicación entre contenedores
+
 ### Diagrama de la Arquitectura
+![Image](https://github.com/user-attachments/assets/e15fd3c6-1853-49e9-b6c9-5cc7fe039bb1)
 
 
 ### Estructura del proyecto
