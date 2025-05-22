@@ -1,8 +1,9 @@
 version: '3.8'
 
 services:
-  flaskapp:
-    image: ami-0cd96f6c6db2f6b65  # Tu AMI específica
+  bookstore:
+    # Usa la imagen que subiste a Docker Hub o ECR
+    image: jdacunag/bookstore-03:latest
     deploy:
       replicas: 3
       update_config:
@@ -12,27 +13,28 @@ services:
       restart_policy:
         condition: on-failure
         max_attempts: 3
+      placement:
+        constraints: [node.role == worker]
       resources:
         limits:
           cpus: '0.5'
           memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
     environment:
       - FLASK_ENV=production
+       - DATABASE_URI=mysql+pymysql://bookstore_user:juandiego123@bookstore-db.cv48yui8kfd3.us-east-1.rds.amazonaws.com/bookstore
       - SECRET_KEY=secretkey
-      # RDS específico
-      - DATABASE_URI=mysql+pymysql://bookstore_user:bookstore_pass@bookstore-db.cv48yui8kfd3.us-east-1.rds.amazonaws.com/bookstore
-    ports:
-      - "5000:5000"
-    networks:
-      - bookstore_net
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - bookstore-network
 
-  # Herramienta de visualización para el swarm
   visualizer:
     image: dockersamples/visualizer:latest
     ports:
@@ -43,8 +45,24 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - bookstore_net
+      - bookstore-network
+
+  proxy:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      replicas: 1
+    networks:
+      - bookstore-network
 
 networks:
-  bookstore_net:
+  bookstore-network:
     driver: overlay
+    attachable: true

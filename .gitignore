@@ -60,3 +60,5 @@ package-lock.json
 # Configuraciones específicas del sistema
 .directory
 desktop.ini
+
+fullchain.pem
