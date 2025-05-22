@@ -157,7 +157,7 @@ Hasta el momento de la entrega, habíamos realizado los objetivos 1 y 2 de esta,
 - **Persistencia:** Volumen Docker para datos de la base de datos
 - **Escalabilidad:** Limitada (vertical únicamente)
 
-#### Diagrama de la Arquitectura
+### Diagrama de la Arquitectura
 
 ![Captura de pantalla 2025-05-21 221544](https://github.com/user-attachments/assets/880a66a2-13ee-4ffd-ba1e-5682929bd473)
 
