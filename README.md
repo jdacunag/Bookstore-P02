@@ -120,6 +120,10 @@ No implementamos kubernetes para el objetivo 3.
     
 7. La vista renderiza los datos en plantillas HTML que se devuelven al usuario
 
+### Diagrama de Arquitectura del Bookstore
+
+![Image](https://github.com/user-attachments/assets/dad737b0-91b2-4be9-a0be-30bf37889941)
+
 ## Objetivo 1
 
 ## ¿Qué implementamos?
@@ -1460,6 +1464,8 @@ echo "Visualizer disponible en: http://$(curl -s ifconfig.me):8080"
 
 * https://www.youtube.com/watch?v=4if3lr6rhO8&pp=ygUbY29tbyB1c2FyIGxvYWQgYmFsYW5jZXIgYXdz
 
-* https://www.youtube.com/watch?v=K7pHMWri1e8&pp=ygUiY29tbyB1c2FyIGRvY2tlciBzd2FybSBjbHVzdGVyIGF3cw%3D%3D 
+* https://www.youtube.com/watch?v=K7pHMWri1e8&pp=ygUiY29tbyB1c2FyIGRvY2tlciBzd2FybSBjbHVzdGVyIGF3cw%3D%3D
+
+* https://claude.ai/public/artifacts/614e77fe-4306-472f-a531-eb944f537d86
   
   
