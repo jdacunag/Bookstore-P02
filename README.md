@@ -164,7 +164,111 @@ No implementamos kubernetes para el objetivo 3.
 ### Objetivo 2
 Realizar el escalamiento en nube de la aplicación monolítica, siguiente algún patrón de arquitectura de escalamiento de apps monolíticas en AWS. La aplicación debe ser escalada utilizando Máquinas Virtuales (VM) con autoescalamiento, base de datos aparte Administrada o si es implementada con VM con Alta Disponibilidad, y Archivos compartidos vía NFS (como un servicio o una VM con NFS con Alta Disponibilidad).
 
+## ¿Qué implementamos?
+**Aplicación BookStore con arquitectura escalable y servicios administrados de AWS:**
+
+### Infraestructura base:
+
+* Múltiples instancias EC2 (t2.micro) gestionadas por Auto Scaling Group (mín: 2, máx: 4, deseado: 2)
+
+* Application Load Balancer (ALB) para distribución de tráfico y alta disponibilidad
+
+* Base de datos MySQL RDS (db.t4g.micro) externa para persistencia centralizada
+
+* Sistema de archivos EFS para almacenamiento compartido entre instancias
+
+* AMI personalizada (bookstore-app-ami) para despliegue consistente de aplicaciones
+
+* Launch Template para configuración estandarizada de nuevas instancias
+
+* Múltiples zonas de disponibilidad para redundancia geográfica
+
+### Componentes de software:
+
+* Application Load Balancer: Distribuye tráfico HTTP/HTTPS entre múltiples instancias y maneja terminación SSL
+
+* Auto Scaling Group: Gestiona automáticamente el número de instancias según demanda
+
+* Docker y Docker Compose: Containerización de la aplicación con inicio automático en cada instancia
+
+* Aplicación Flask: API monolítica replicada en múltiples instancias para alta disponibilidad
+
+* MySQL RDS: Base de datos administrada por AWS con backups automáticos y alta disponibilidad
+
+* Amazon EFS: Sistema de archivos distribuido para compartir datos entre instancias
+
+* AWS Certificate Manager: Gestión automática de certificados SSL/TLS
+
+### Seguridad y redes:
+
+* Grupos de seguridad especializados (app-sg, db-sg, efs-sg) con acceso mínimo necesario
+
+* Base de datos RDS en subredes privadas, no accesible desde Internet
+
+* Certificados SSL gestionados automáticamente por AWS Certificate Manager
+
+* Comunicación segura entre componentes a través de grupos de seguridad específicos
+
+### Funcionalidades de la aplicación:
+
+* Registro y autenticación de usuarios con sesiones distribuidas
+
+* Catálogo de libros con alta disponibilidad (sin interrupciones por fallos)
+
+* Sistema de compras con gestión de stock sincronizada entre instancias
+
+* Procesamiento de pagos (simulado) con tolerancia a fallos
+
+* Gestión de entregas con múltiples proveedores
+
+* Panel administrativo accesible desde cualquier instancia
+
+* Continuidad del servicio: La aplicación permanece disponible durante fallos de instancias individuales
+
+### Características técnicas:
+
+* Arquitectura: Monolítica replicada con balanceador de carga para alta disponibilidad
+
+* Base de datos: MySQL RDS externa, compartida por todas las instancias
+
+* Load Balancing: ALB distribuye tráfico automáticamente entre instancias saludables
+
+* Persistencia: RDS para datos transaccionales + EFS para archivos compartidos
+
+* Escalabilidad: Horizontal automática basada en métricas de CPU (2-4 instancias)
+
+* Alta disponibilidad: Multi-AZ deployment con recuperación automática ante fallos
+
+* Monitoreo: CloudWatch para métricas de rendimiento y salud de instancias
+
+### Auto-escalamiento y recuperación:
+
+* Scaling automático: Nuevas instancias se lanzan cuando CPU > 70% por 2 minutos consecutivos
+
+* Health checks: ALB verifica constantemente la salud de las instancias (cada 30s)
+
+* Self-healing: Instancias no saludables son terminadas y reemplazadas automáticamente
+
+* Zero-downtime deployments: Actualizaciones sin interrupciones usando rolling deployments
+
+* Disaster recovery: Respaldo automático de RDS y recuperación en múltiples AZs
+
+### Servicios administrados de AWS:
+
+
+* RDS: Eliminates gestión manual de base de datos (backups, patches, escalamiento)
+
+* EFS: Almacenamiento elástico que escala automáticamente según necesidades
+
+* ALB: Balanceador gestionado con alta disponibilidad incorporada
+
+* Auto Scaling: Gestión automática de capacidad sin intervención manual
+
+* CloudWatch: Monitoreo y alertas integradas para todos los componentes
+  
 #### Diagrama de la Arquitectura
+
+![Image](https://github.com/user-attachments/assets/f90424b3-349f-4162-98b3-8a81376b1f4a)
 
 ## Objetivo 3
 En el objetivo 3, se conservará mucho de lo desarrollado en el objetivo 2, pero en vez se utilizar máquinas virtuales en autoescalamiento, se utilizará un clúster.
@@ -273,6 +377,19 @@ Bookstore-P02/
 │   ├── extensions.py
 │   └── requirements.txt
 ├── Bookstore-03/ # Carpeta con el objetivo 3 del proyecto
+│   ├── controllers                   
+│   ├── instance    
+│   ├── models
+│   ├── static
+│   ├── templates
+│   ├── nginx
+│   ├── app.py
+│   ├── config.py
+│   ├── docker-compose.yml
+│   ├── docker-stack.yml
+│   ├── Dockerfile
+│   ├── extensions.py
+│   └── requirements.txt
 └── README.md
 ```
 
