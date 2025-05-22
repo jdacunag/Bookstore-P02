@@ -398,13 +398,13 @@ Bookstore-P02/
 
 ### Lenguajes, librerías y tecnologías usadas
 
+| Función | Herramientas |
+|--------|-------------|
+| Bases de datos | MySQL, RDS para Despliegue |
+| Orquestación | Docker, Docker Compose, Docker Swarm para Clúster |
+| Contenedores | Docker Engine |
+| Despliegue | AWS |
 Frontend ->	Flask (Python)	
-
-Bases de datos	(MySQL)	
-
-Orquestación (Docker Swarm, Docker)
-
-Contenedores (Docker Engine)
 
 ### Compilación y ejecución
 
@@ -1453,6 +1453,12 @@ echo "Visualizer disponible en: http://$(curl -s ifconfig.me):8080"
 
 * https://hub.docker.com/repository/docker/jdacunag/bookstore-03/general
   
-* https://claude.ai/public/artifacts/037e9bd2-5ddb-41dd-b0e9-64811ecadb37 
+* https://claude.ai/public/artifacts/037e9bd2-5ddb-41dd-b0e9-64811ecadb37
+
+* https://claude.ai/public/artifacts/7b31e271-783d-4416-b4d7-6187501c07cf
+
+* https://www.youtube.com/watch?v=4if3lr6rhO8&pp=ygUbY29tbyB1c2FyIGxvYWQgYmFsYW5jZXIgYXdz
+
+* https://www.youtube.com/watch?v=K7pHMWri1e8&pp=ygUiY29tbyB1c2FyIGRvY2tlciBzd2FybSBjbHVzdGVyIGF3cw%3D%3D 
   
   
