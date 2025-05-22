@@ -1334,4 +1334,8 @@ echo "Visualizer disponible en: http://$(curl -s ifconfig.me):8080"
 
 * https://claude.ai/public/artifacts/688a7e93-3dd1-43a6-a232-33f21f976b99
 
-* https://hub.docker.com/repository/docker/jdacunag/bookstore-03/general 
+* https://hub.docker.com/repository/docker/jdacunag/bookstore-03/general
+  
+* https://claude.ai/public/artifacts/037e9bd2-5ddb-41dd-b0e9-64811ecadb37 
+  
+  
