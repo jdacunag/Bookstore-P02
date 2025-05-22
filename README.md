@@ -120,8 +120,42 @@ Hasta el momento de la entrega, habíamos realizado los objetivos 1 y 2 de esta,
     
 7. La vista renderiza los datos en plantillas HTML que se devuelven al usuario
 
-### Objetivo 1
-Desplegar la aplicación BookStore Monolítica en una Máquina Virtual en AWS, con un dominio propio, certificado SSL y Proxy inverso en NGINX. 
+## Objetivo 1
+
+## ¿Qué implementamos?
+
+**Aplicación BookStore desplegada en una sola máquina virtual EC2 con:**
+
+### Infraestructura base:
+- 1 instancia EC2 (t2.micro) con Amazon Linux 2023
+- IP elástica para acceso consistente desde Internet
+- Grupo de seguridad configurado para HTTP (80), HTTPS (443) y SSH (22)
+
+### Componentes de software:
+- **Nginx:** Servidor web y proxy inverso que maneja las conexiones HTTPS y redirige al contenedor de la aplicación
+- **Docker y Docker Compose:** Para containerización y orquestación de servicios
+- **Aplicación Flask:** API monolítica que maneja todas las funcionalidades (autenticación, catálogo, compras, pagos, entregas)
+- **Base de datos MySQL:** Almacenamiento de datos en contenedor con volumen persistente
+
+### Seguridad y dominio:
+- Dominio propio configurado (proyecto2.dominio.tld)
+- Certificado SSL de Let's Encrypt para conexiones HTTPS seguras
+- Renovación automática de certificados
+
+### Funcionalidades de la aplicación:
+- Registro y autenticación de usuarios
+- Catálogo de libros con visualización
+- Sistema de compras con gestión de stock
+- Procesamiento de pagos (simulado)
+- Gestión de entregas con múltiples proveedores
+- Panel administrativo para gestión de usuarios
+
+### Características técnicas:
+- **Arquitectura:** Monolítica (toda la lógica en una sola aplicación)
+- **Base de datos:** MySQL en contenedor Docker
+- **Proxy inverso:** Nginx redirige de puerto 80/443 a puerto 5000
+- **Persistencia:** Volumen Docker para datos de la base de datos
+- **Escalabilidad:** Limitada (vertical únicamente)
 
 #### Diagrama de la Arquitectura
 
